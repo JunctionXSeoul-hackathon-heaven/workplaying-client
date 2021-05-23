@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:workplaying_junx_seoul_heaven/models/user.dart';
 import 'package:workplaying_junx_seoul_heaven/resources/nav_string.dart';
 import 'package:workplaying_junx_seoul_heaven/services/userRepository.dart';
+import 'package:workplaying_junx_seoul_heaven/widget/title_widget.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -11,49 +12,111 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPage extends State<SignInPage> {
   final TextEditingController userNameController = new TextEditingController();
-  final TextEditingController companyNameController = new TextEditingController();
+  final TextEditingController companyNameController =
+      new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Spacer(),
-          Text("이름"),
+          TitleWidget(false),
+          SizedBox(
+            height: 35,
+          ),
+
+          ///name
+          Container(
+              padding: EdgeInsets.only(left: 16),
+              child: Text(
+                "Name",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              )),
+          SizedBox(
+            height: 8,
+          ),
+          Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: TextFormField(
+                controller: userNameController,
+                decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: resSubColor),
+                    ),
+                    focusColor: resSubColor,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(6)),
+                    ),
+                    hintText: "Input Your Name",
+                    hintStyle: TextStyle(
+                      color: Color(0xffd3d3d3),
+                    )),
+              )),
           SizedBox(
             height: 20,
           ),
-          TextFormField(
-            controller: userNameController,
+
+          ///company name
+          Container(
+              padding: EdgeInsets.only(left: 16),
+              child: Text(
+                "Company",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              )),
+          SizedBox(
+            height: 8,
           ),
-          Text("이름"),
-          TextFormField(
-            controller: companyNameController,
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: TextFormField(
+              controller: companyNameController,
+              decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: resSubColor),
+                  ),
+                  focusColor: resSubColor,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(6))),
+                  hintText: "Input Your Company",
+                  hintStyle: TextStyle(
+                    color: Color(0xffd3d3d3),
+                  )),
+            ),
           ),
           Spacer(),
+
+          /// bottom button
           Align(
             alignment: Alignment.center,
             child: Container(
-              margin: EdgeInsets.only(bottom: 30),
+              margin: EdgeInsets.only(bottom: 30, left: 10, right: 10),
               child: Ink(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(3)),
-                    color: Colors.blueAccent),
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                    color: resMainColor),
                 child: InkWell(
                   child: Container(
-                    width: 220,
-                    height: 70,
+                    width: 355,
+                    height: 50,
                     child: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "hi",
+                          "Playing in work",
+                          style: TextStyle(fontSize: 18, color: Colors.white),
                         )),
                   ),
                   onTap: () {
                     User user = new User();
                     user.name = userNameController.text;
-                    user.companyName = companyNameController.text;
+                    user.company = companyNameController.text;
                     UserRepository().updateUser(user);
                     Navigator.pushNamed(context, resMainViewUri);
                   },
